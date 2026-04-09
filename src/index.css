@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b1220;
+  color: white;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #111c33;
+}
+
+.nav-links button {
+  margin: 0 5px;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #1e293b, #0b1220);
+}
+
+.hero button {
+  padding: 10px 20px;
+  border: none;
+  background: #38bdf8;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teams img {
+  width: 40px;
+  height: 40px;
+}
+
+/* LEAGUES */
+.league-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.league-card {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.league-card img {
+  width: 40px;
+}
+
+/* CONTACT */
+.contact {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
