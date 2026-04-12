@@ -8,6 +8,82 @@ export const matches = [
     oddsA: 1.8,
     oddsN: 3.2,
     oddsB: 2.1,
+    // Double chance
+    oddsAorN: parseFloat((1 / (1/1.8 + 1/3.2)).toFixed(2)),   // 1X
+    oddsAorB: parseFloat((1 / (1/1.8 + 1/2.1)).toFixed(2)),   // 12
+    oddsNorB: parseFloat((1 / (1/3.2 + 1/2.1)).toFixed(2)),   // X2
+    // Over/Under buts (match complet)
+    over05: 1.05, under05: 8.00,
+    over15: 1.30, under15: 3.20,
+    over25: 1.85, under25: 1.90,
+    over35: 2.80, under35: 1.40,
+    over45: 4.50, under45: 1.15,
+    // Les deux équipes marquent
+    btsYes: 1.65, btsNo: 2.10,
+    // ─── NOUVEAUX PARIS ───────────────────────────────────────────
+    // Buts à la 1ère mi-temps (Over/Under)
+    ht_over05: 1.55, ht_under05: 2.20,
+    ht_over15: 3.00, ht_under15: 1.35,
+    // Score exact à la 1ère mi-temps
+    ht_exact: {
+      "0-0": 2.10,
+      "1-0": 3.50,
+      "0-1": 4.00,
+      "1-1": 6.50,
+      "2-0": 8.00,
+      "0-2": 9.00,
+      autre: 5.00,
+    },
+    // Score exact (match complet)
+    exact_score: {
+      "0-0": 7.00,
+      "1-0": 6.50,
+      "0-1": 7.50,
+      "1-1": 5.50,
+      "2-0": 7.00,
+      "0-2": 8.00,
+      "2-1": 6.50,
+      "1-2": 7.50,
+      "2-2": 9.00,
+      "3-0": 11.00,
+      "0-3": 13.00,
+      "3-1": 10.00,
+      "1-3": 12.00,
+      "3-2": 13.00,
+      "2-3": 15.00,
+      autre: 12.00,
+    },
+    // Quelle équipe marque en premier
+    first_goal: {
+      teamA: 1.75,
+      teamB: 2.05,
+      noGoal: 9.00,
+    },
+    // Mi-temps / Fin de match (ex: "1/1" = Arsenal mène à la MT et gagne)
+    ht_ft: {
+      "1/1": 2.60,
+      "1/N": 12.00,
+      "1/2": 18.00,
+      "N/1": 4.50,
+      "N/N": 5.00,
+      "N/2": 6.00,
+      "2/1": 14.00,
+      "2/N": 10.00,
+      "2/2": 3.80,
+    },
+    // Clean sheet (équipe ne prend pas de but)
+    cleanSheet: {
+      teamA: 2.80,
+      teamB: 3.50,
+    },
+    // Handicap asiatique
+    handicap: {
+      "teamA -1": 2.90,
+      "teamA -0.5": 2.10,
+      "draw (0)": 3.20,
+      "teamB +0.5": 1.75,
+      "teamB +1": 1.45,
+    },
   },
   {
     id: 2,
@@ -18,8 +94,40 @@ export const matches = [
     oddsA: 2.0,
     oddsN: 3.5,
     oddsB: 1.7,
+    oddsAorN: parseFloat((1 / (1/2.0 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.0 + 1/1.7)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/1.7)).toFixed(2)),
+    over05: 1.04, under05: 9.00,
+    over15: 1.25, under15: 3.50,
+    over25: 1.75, under25: 2.00,
+    over35: 2.60, under35: 1.45,
+    over45: 4.00, under45: 1.18,
+    btsYes: 1.55, btsNo: 2.30,
+    ht_over05: 1.50, ht_under05: 2.30,
+    ht_over15: 2.90, ht_under15: 1.38,
+    ht_exact: {
+      "0-0": 2.00, "1-0": 3.30, "0-1": 3.00,
+      "1-1": 6.00, "2-0": 7.50, "0-2": 7.00, autre: 4.80,
+    },
+    exact_score: {
+      "0-0": 7.50, "1-0": 7.00, "0-1": 6.00,
+      "1-1": 5.00, "2-0": 7.50, "0-2": 6.50,
+      "2-1": 7.00, "1-2": 6.00, "2-2": 8.50,
+      "3-0": 11.00, "0-3": 10.00, "3-1": 10.00,
+      "1-3": 9.00, autre: 11.00,
+    },
+    first_goal: { teamA: 2.05, teamB: 1.70, noGoal: 10.00 },
+    ht_ft: {
+      "1/1": 3.00, "1/N": 14.00, "1/2": 20.00,
+      "N/1": 4.80, "N/N": 5.50, "N/2": 5.50,
+      "2/1": 15.00, "2/N": 11.00, "2/2": 3.20,
+    },
+    cleanSheet: { teamA: 3.20, teamB: 2.80 },
+    handicap: {
+      "teamA -1": 3.20, "teamA -0.5": 2.30, "draw (0)": 3.50,
+      "teamB +0.5": 1.65, "teamB +1": 1.40,
+    },
   },
-  
   {
     id: 3,
     sport: "basket",
@@ -27,12 +135,34 @@ export const matches = [
     teamA: { name: "Lakers", logo: "/images/lakers.png" },
     teamB: { name: "Bulls", logo: "/images/bulls.png" },
     oddsA: 1.6,
-    oddsN: null, // pas de nul en basket
+    oddsN: null,
     oddsB: 2.3,
+    oddsAorN: null, oddsAorB: null, oddsNorB: null,
+    // Total de points (match complet)
+    over2055: 1.90, under2055: 1.90,
+    over2155: 1.85, under2155: 1.95,
+    over2255: 1.80, under2255: 2.00,
+    btsYes: null, btsNo: null,
+    // ─── NOUVEAUX PARIS BASKET ─────────────────────────────────────
+    // Total de points à la mi-temps
+    ht_over1025: 1.88, ht_under1025: 1.92,
+    ht_over1075: 1.85, ht_under1075: 1.95,
+    // Handicap points
+    handicap: {
+      "teamA -5.5": 1.90,
+      "teamA -3.5": 1.75,
+      "teamB +3.5": 2.05,
+      "teamB +5.5": 2.20,
+    },
+    // Équipe qui marque en 1er
+    first_score: { teamA: 1.80, teamB: 2.00 },
+    // Race to (premier à atteindre X points)
+    raceTo: {
+      teamA_10: 1.75, teamB_10: 2.05,
+      teamA_20: 1.80, teamB_20: 2.00,
+    },
   },
-
-
-   {
+  {
     id: 4,
     sport: "football",
     league: "Ligue 1",
@@ -41,6 +171,39 @@ export const matches = [
     oddsA: 1.54,
     oddsN: 3.5,
     oddsB: 3.22,
+    oddsAorN: parseFloat((1 / (1/1.54 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/1.54 + 1/3.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/3.22)).toFixed(2)),
+    over05: 1.04, under05: 9.50,
+    over15: 1.20, under15: 4.00,
+    over25: 1.65, under25: 2.10,
+    over35: 2.50, under35: 1.48,
+    over45: 4.20, under45: 1.16,
+    btsYes: 1.75, btsNo: 1.95,
+    ht_over05: 1.45, ht_under05: 2.45,
+    ht_over15: 2.80, ht_under15: 1.42,
+    ht_exact: {
+      "0-0": 1.90, "1-0": 3.00, "0-1": 5.00,
+      "1-1": 6.50, "2-0": 7.00, "0-2": 10.00, autre: 5.50,
+    },
+    exact_score: {
+      "0-0": 8.50, "1-0": 6.00, "0-1": 10.00,
+      "1-1": 6.00, "2-0": 6.50, "0-2": 11.00,
+      "2-1": 6.00, "1-2": 11.00, "2-2": 10.00,
+      "3-0": 9.00, "0-3": 15.00, "3-1": 9.00,
+      "1-3": 14.00, autre: 12.00,
+    },
+    first_goal: { teamA: 1.55, teamB: 3.10, noGoal: 11.00 },
+    ht_ft: {
+      "1/1": 2.30, "1/N": 11.00, "1/2": 20.00,
+      "N/1": 5.00, "N/N": 5.50, "N/2": 7.00,
+      "2/1": 20.00, "2/N": 13.00, "2/2": 5.00,
+    },
+    cleanSheet: { teamA: 2.50, teamB: 4.20 },
+    handicap: {
+      "teamA -1": 2.60, "teamA -0.5": 1.80, "draw (0)": 3.50,
+      "teamB +0.5": 2.00, "teamB +1": 2.60,
+    },
   },
   {
     id: 5,
@@ -51,6 +214,38 @@ export const matches = [
     oddsA: 2.25,
     oddsN: 3.5,
     oddsB: 2.22,
+    oddsAorN: parseFloat((1 / (1/2.25 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.25 + 1/2.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/2.22)).toFixed(2)),
+    over05: 1.06, under05: 7.50,
+    over15: 1.32, under15: 3.10,
+    over25: 1.88, under25: 1.88,
+    over35: 2.85, under35: 1.38,
+    over45: 4.60, under45: 1.14,
+    btsYes: 1.70, btsNo: 2.00,
+    ht_over05: 1.55, ht_under05: 2.20,
+    ht_over15: 3.00, ht_under15: 1.35,
+    ht_exact: {
+      "0-0": 2.10, "1-0": 3.60, "0-1": 3.50,
+      "1-1": 6.50, "2-0": 8.00, "0-2": 8.00, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.00, "1-0": 7.00, "0-1": 7.00,
+      "1-1": 5.50, "2-0": 7.50, "0-2": 7.50,
+      "2-1": 6.50, "1-2": 6.50, "2-2": 9.00,
+      "3-0": 11.00, "0-3": 11.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.20, teamB: 2.10, noGoal: 9.50 },
+    ht_ft: {
+      "1/1": 3.20, "1/N": 12.00, "1/2": 18.00,
+      "N/1": 4.50, "N/N": 5.00, "N/2": 5.50,
+      "2/1": 15.00, "2/N": 11.00, "2/2": 3.60,
+    },
+    cleanSheet: { teamA: 3.00, teamB: 3.10 },
+    handicap: {
+      "teamA -0.5": 2.25, "draw (0)": 3.50,
+      "teamB +0.5": 2.22, "teamB -0.5": 2.50,
+    },
   },
   {
     id: 6,
@@ -61,18 +256,82 @@ export const matches = [
     oddsA: 3.00,
     oddsN: 4.5,
     oddsB: 2.5,
+    oddsAorN: parseFloat((1 / (1/3.00 + 1/4.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/3.00 + 1/2.5)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/4.5 + 1/2.5)).toFixed(2)),
+    over05: 1.08, under05: 7.00,
+    over15: 1.40, under15: 2.90,
+    over25: 2.00, under25: 1.80,
+    over35: 3.00, under35: 1.35,
+    over45: 5.00, under45: 1.12,
+    btsYes: 1.80, btsNo: 1.90,
+    ht_over05: 1.60, ht_under05: 2.10,
+    ht_over15: 3.20, ht_under15: 1.30,
+    ht_exact: {
+      "0-0": 2.20, "1-0": 4.00, "0-1": 3.60,
+      "1-1": 7.00, "2-0": 9.00, "0-2": 8.00, autre: 5.50,
+    },
+    exact_score: {
+      "0-0": 6.50, "1-0": 8.00, "0-1": 7.00,
+      "1-1": 6.00, "2-0": 9.00, "0-2": 8.00,
+      "2-1": 8.50, "1-2": 7.50, "2-2": 10.00,
+      "3-0": 14.00, "0-3": 12.00, autre: 13.00,
+    },
+    first_goal: { teamA: 3.00, teamB: 2.40, noGoal: 8.50 },
+    ht_ft: {
+      "1/1": 4.50, "1/N": 14.00, "1/2": 22.00,
+      "N/1": 5.50, "N/N": 6.00, "N/2": 6.00,
+      "2/1": 18.00, "2/N": 13.00, "2/2": 4.00,
+    },
+    cleanSheet: { teamA: 4.00, teamB: 3.50 },
+    handicap: {
+      "teamA -0.5": 3.00, "draw (0)": 4.50,
+      "teamB +0.5": 2.20, "teamB -0.5": 2.80,
+    },
   },
   {
     id: 7,
-    sport: "Bundesliga",
-    league: "Ligue 1",
+    sport: "football",
+    league: "Bundesliga",
     teamA: { name: "Fc Bayern Munich", logo: "/images/bayern.png" },
     teamB: { name: "Borussia Dortmund", logo: "/images/dortmund.png" },
     oddsA: 1.54,
     oddsN: 3.5,
     oddsB: 3.00,
+    oddsAorN: parseFloat((1 / (1/1.54 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/1.54 + 1/3.00)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/3.00)).toFixed(2)),
+    over05: 1.03, under05: 10.00,
+    over15: 1.18, under15: 4.20,
+    over25: 1.60, under25: 2.20,
+    over35: 2.40, under35: 1.52,
+    over45: 3.80, under45: 1.20,
+    btsYes: 1.60, btsNo: 2.20,
+    ht_over05: 1.40, ht_under05: 2.60,
+    ht_over15: 2.70, ht_under15: 1.45,
+    ht_exact: {
+      "0-0": 1.80, "1-0": 2.80, "0-1": 4.50,
+      "1-1": 6.00, "2-0": 6.50, "0-2": 9.00, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 9.00, "1-0": 5.50, "0-1": 9.00,
+      "1-1": 6.00, "2-0": 5.50, "0-2": 10.00,
+      "2-1": 5.50, "1-2": 10.00, "2-2": 9.50,
+      "3-0": 8.00, "0-3": 14.00, "3-1": 8.50,
+      "1-3": 14.00, "3-2": 11.00, autre: 11.00,
+    },
+    first_goal: { teamA: 1.55, teamB: 2.90, noGoal: 12.00 },
+    ht_ft: {
+      "1/1": 2.20, "1/N": 10.00, "1/2": 22.00,
+      "N/1": 5.00, "N/N": 5.50, "N/2": 7.50,
+      "2/1": 22.00, "2/N": 15.00, "2/2": 5.00,
+    },
+    cleanSheet: { teamA: 2.40, teamB: 4.50 },
+    handicap: {
+      "teamA -1": 2.50, "teamA -0.5": 1.75, "draw (0)": 3.50,
+      "teamB +0.5": 2.05, "teamB +1": 2.70,
+    },
   },
-
   {
     id: 8,
     sport: "football",
@@ -82,6 +341,38 @@ export const matches = [
     oddsA: 2.11,
     oddsN: 3.5,
     oddsB: 3.22,
+    oddsAorN: parseFloat((1 / (1/2.11 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.11 + 1/3.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/3.22)).toFixed(2)),
+    over05: 1.06, under05: 7.80,
+    over15: 1.35, under15: 3.00,
+    over25: 1.90, under25: 1.85,
+    over35: 2.90, under35: 1.36,
+    over45: 4.70, under45: 1.13,
+    btsYes: 1.72, btsNo: 1.98,
+    ht_over05: 1.55, ht_under05: 2.20,
+    ht_over15: 3.00, ht_under15: 1.35,
+    ht_exact: {
+      "0-0": 2.10, "1-0": 3.70, "0-1": 4.00,
+      "1-1": 6.50, "2-0": 8.50, "0-2": 9.00, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.00, "1-0": 7.50, "0-1": 8.50,
+      "1-1": 5.50, "2-0": 8.00, "0-2": 9.00,
+      "2-1": 7.50, "1-2": 8.00, "2-2": 9.50,
+      "3-0": 12.00, "0-3": 13.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.10, teamB: 2.70, noGoal: 9.00 },
+    ht_ft: {
+      "1/1": 3.20, "1/N": 13.00, "1/2": 20.00,
+      "N/1": 4.80, "N/N": 5.20, "N/2": 6.00,
+      "2/1": 18.00, "2/N": 12.00, "2/2": 4.50,
+    },
+    cleanSheet: { teamA: 3.20, teamB: 3.80 },
+    handicap: {
+      "teamA -0.5": 2.20, "draw (0)": 3.50,
+      "teamB +0.5": 2.50, "teamB -0.5": 3.30,
+    },
   },
   {
     id: 9,
@@ -92,6 +383,38 @@ export const matches = [
     oddsA: 2.25,
     oddsN: 3.5,
     oddsB: 2.90,
+    oddsAorN: parseFloat((1 / (1/2.25 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.25 + 1/2.90)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/2.90)).toFixed(2)),
+    over05: 1.05, under05: 8.50,
+    over15: 1.28, under15: 3.40,
+    over25: 1.80, under25: 1.95,
+    over35: 2.75, under35: 1.42,
+    over45: 4.40, under45: 1.16,
+    btsYes: 1.68, btsNo: 2.05,
+    ht_over05: 1.52, ht_under05: 2.25,
+    ht_over15: 2.95, ht_under15: 1.37,
+    ht_exact: {
+      "0-0": 2.05, "1-0": 3.50, "0-1": 4.20,
+      "1-1": 6.50, "2-0": 8.00, "0-2": 9.50, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.50, "1-0": 7.00, "0-1": 8.00,
+      "1-1": 5.50, "2-0": 7.00, "0-2": 8.50,
+      "2-1": 6.50, "1-2": 8.00, "2-2": 9.00,
+      "3-0": 11.00, "0-3": 12.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.20, teamB: 2.65, noGoal: 9.50 },
+    ht_ft: {
+      "1/1": 3.20, "1/N": 13.00, "1/2": 20.00,
+      "N/1": 4.60, "N/N": 5.20, "N/2": 6.20,
+      "2/1": 18.00, "2/N": 12.00, "2/2": 4.80,
+    },
+    cleanSheet: { teamA: 3.10, teamB: 3.50 },
+    handicap: {
+      "teamA -0.5": 2.30, "draw (0)": 3.50,
+      "teamB +0.5": 2.35, "teamB -0.5": 3.00,
+    },
   },
   {
     id: 10,
@@ -102,9 +425,41 @@ export const matches = [
     oddsA: 2.10,
     oddsN: 3.5,
     oddsB: 2.22,
+    oddsAorN: parseFloat((1 / (1/2.10 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.10 + 1/2.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/2.22)).toFixed(2)),
+    over05: 1.06, under05: 7.60,
+    over15: 1.33, under15: 3.05,
+    over25: 1.87, under25: 1.87,
+    over35: 2.82, under35: 1.39,
+    over45: 4.55, under45: 1.14,
+    btsYes: 1.73, btsNo: 1.97,
+    ht_over05: 1.55, ht_under05: 2.20,
+    ht_over15: 2.98, ht_under15: 1.36,
+    ht_exact: {
+      "0-0": 2.10, "1-0": 3.60, "0-1": 3.70,
+      "1-1": 6.50, "2-0": 8.00, "0-2": 8.50, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.00, "1-0": 7.00, "0-1": 7.50,
+      "1-1": 5.50, "2-0": 7.50, "0-2": 8.00,
+      "2-1": 6.50, "1-2": 7.00, "2-2": 9.00,
+      "3-0": 11.00, "0-3": 12.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.05, teamB: 2.20, noGoal: 9.00 },
+    ht_ft: {
+      "1/1": 3.10, "1/N": 12.00, "1/2": 19.00,
+      "N/1": 4.70, "N/N": 5.20, "N/2": 5.80,
+      "2/1": 17.00, "2/N": 11.00, "2/2": 3.80,
+    },
+    cleanSheet: { teamA: 3.00, teamB: 3.20 },
+    handicap: {
+      "teamA -0.5": 2.20, "draw (0)": 3.50,
+      "teamB +0.5": 2.30, "teamB -0.5": 3.10,
+    },
   },
   {
-    id: 4,
+    id: 11,
     sport: "football",
     league: "Serie A",
     teamA: { name: "AS Roma", logo: "/images/roma.png" },
@@ -112,17 +467,213 @@ export const matches = [
     oddsA: 2.10,
     oddsN: 3.25,
     oddsB: 1.80,
+    oddsAorN: parseFloat((1 / (1/2.10 + 1/3.25)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.10 + 1/1.80)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.25 + 1/1.80)).toFixed(2)),
+    over05: 1.05, under05: 8.20,
+    over15: 1.30, under15: 3.25,
+    over25: 1.84, under25: 1.92,
+    over35: 2.78, under35: 1.41,
+    over45: 4.45, under45: 1.15,
+    btsYes: 1.67, btsNo: 2.08,
+    ht_over05: 1.53, ht_under05: 2.23,
+    ht_over15: 2.96, ht_under15: 1.37,
+    ht_exact: {
+      "0-0": 2.05, "1-0": 3.70, "0-1": 3.30,
+      "1-1": 6.50, "2-0": 8.50, "0-2": 7.50, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.50, "1-0": 7.50, "0-1": 6.50,
+      "1-1": 5.50, "2-0": 8.00, "0-2": 7.00,
+      "2-1": 7.50, "1-2": 6.50, "2-2": 9.00,
+      "3-0": 12.00, "0-3": 10.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.15, teamB: 1.85, noGoal: 9.50 },
+    ht_ft: {
+      "1/1": 3.20, "1/N": 13.00, "1/2": 19.00,
+      "N/1": 4.50, "N/N": 5.20, "N/2": 5.50,
+      "2/1": 16.00, "2/N": 11.00, "2/2": 3.40,
+    },
+    cleanSheet: { teamA: 3.30, teamB: 2.90 },
+    handicap: {
+      "teamA -0.5": 2.30, "draw (0)": 3.25,
+      "teamB +0.5": 1.95, "teamB -0.5": 2.50,
+    },
   },
   {
-    id: 4,
+    id: 12,
     sport: "Basketball",
     league: "NBA",
     teamA: { name: "Toronto Raptors", logo: "/images/raptors.png" },
     teamB: { name: "Celtics", logo: "/images/celtics.png" },
     oddsA: 1.54,
-    oddsN: 3.5,
+    oddsN: null,
     oddsB: 3.22,
+    oddsAorN: null, oddsAorB: null, oddsNorB: null,
+    over2055: 1.88, under2055: 1.92,
+    over2155: 1.84, under2155: 1.96,
+    over2255: 1.80, under2255: 2.00,
+    btsYes: null, btsNo: null,
+    ht_over1025: 1.87, ht_under1025: 1.93,
+    ht_over1075: 1.84, ht_under1075: 1.96,
+    handicap: {
+      "teamA -5.5": 1.92, "teamA -3.5": 1.78,
+      "teamB +3.5": 2.02, "teamB +5.5": 2.18,
+    },
+    first_score: { teamA: 1.80, teamB: 2.00 },
+    raceTo: {
+      teamA_10: 1.78, teamB_10: 2.02,
+      teamA_20: 1.82, teamB_20: 1.98,
+    },
   },
-  
-
+  {
+    id: 13,
+    sport: "Football",
+    league: "Super League",
+    teamA: { name: "Fenerbahçe", logo: "/images/fenerbahce.png" },
+    teamB: { name: "Galatasaray", logo: "/images/galatasaray.png" },
+    oddsA: 2.10,
+    oddsN: 3.5,
+    oddsB: 2.22,
+    oddsAorN: parseFloat((1 / (1/2.10 + 1/3.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/2.10 + 1/2.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.5 + 1/2.22)).toFixed(2)),
+    over05: 1.06, under05: 7.70,
+    over15: 1.34, under15: 3.02,
+    over25: 1.88, under25: 1.86,
+    over35: 2.83, under35: 1.38,
+    over45: 4.58, under45: 1.13,
+    btsYes: 1.74, btsNo: 1.96,
+    ht_over05: 1.56, ht_under05: 2.18,
+    ht_over15: 3.02, ht_under15: 1.34,
+    ht_exact: {
+      "0-0": 2.10, "1-0": 3.60, "0-1": 3.70,
+      "1-1": 6.60, "2-0": 8.10, "0-2": 8.40, autre: 5.10,
+    },
+    exact_score: {
+      "0-0": 7.00, "1-0": 7.10, "0-1": 7.50,
+      "1-1": 5.60, "2-0": 7.60, "0-2": 8.00,
+      "2-1": 6.60, "1-2": 7.10, "2-2": 9.10,
+      "3-0": 11.50, "0-3": 12.00, autre: 12.00,
+    },
+    first_goal: { teamA: 2.05, teamB: 2.20, noGoal: 9.00 },
+    ht_ft: {
+      "1/1": 3.10, "1/N": 12.50, "1/2": 19.50,
+      "N/1": 4.60, "N/N": 5.20, "N/2": 5.90,
+      "2/1": 17.50, "2/N": 11.50, "2/2": 3.90,
+    },
+    cleanSheet: { teamA: 3.10, teamB: 3.20 },
+    handicap: {
+      "teamA -0.5": 2.20, "draw (0)": 3.50,
+      "teamB +0.5": 2.30, "teamB -0.5": 3.10,
+    },
+  },
+  {
+    id: 14,
+    sport: "Football",
+    league: "Super League",
+    teamA: { name: "Besiktas", logo: "/images/besiktas.png" },
+    teamB: { name: "Trabzonspor", logo: "/images/Trabzonspor.png" },
+    oddsA: 1.85,
+    oddsN: 3.40,
+    oddsB: 3.12,
+    oddsAorN: parseFloat((1 / (1/1.85 + 1/3.40)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/1.85 + 1/3.12)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/3.40 + 1/3.12)).toFixed(2)),
+    over05: 1.05, under05: 8.30,
+    over15: 1.29, under15: 3.30,
+    over25: 1.82, under25: 1.93,
+    over35: 2.76, under35: 1.43,
+    over45: 4.42, under45: 1.16,
+    btsYes: 1.69, btsNo: 2.03,
+    ht_over05: 1.52, ht_under05: 2.24,
+    ht_over15: 2.94, ht_under15: 1.38,
+    ht_exact: {
+      "0-0": 2.05, "1-0": 3.40, "0-1": 4.30,
+      "1-1": 6.40, "2-0": 7.80, "0-2": 9.50, autre: 5.00,
+    },
+    exact_score: {
+      "0-0": 7.50, "1-0": 6.80, "0-1": 8.50,
+      "1-1": 5.50, "2-0": 7.00, "0-2": 9.00,
+      "2-1": 6.50, "1-2": 8.50, "2-2": 9.00,
+      "3-0": 10.00, "0-3": 13.00, autre: 12.00,
+    },
+    first_goal: { teamA: 1.80, teamB: 3.00, noGoal: 10.00 },
+    ht_ft: {
+      "1/1": 2.70, "1/N": 11.00, "1/2": 20.00,
+      "N/1": 4.80, "N/N": 5.40, "N/2": 6.50,
+      "2/1": 19.00, "2/N": 12.00, "2/2": 5.00,
+    },
+    cleanSheet: { teamA: 2.80, teamB: 4.00 },
+    handicap: {
+      "teamA -1": 3.20, "teamA -0.5": 1.90, "draw (0)": 3.40,
+      "teamB +0.5": 2.20, "teamB +1": 2.90,
+    },
+  },
+  {
+    id: 15,
+    sport: "Football",
+    league: "Super League",
+    teamA: { name: "Rizespor", logo: "/images/rizespor.png" },
+    teamB: { name: "Adana Demirspor", logo: "/images/adana.png" },
+    oddsA: 1.70,
+    oddsN: 4.5,
+    oddsB: 3.22,
+    oddsAorN: parseFloat((1 / (1/1.70 + 1/4.5)).toFixed(2)),
+    oddsAorB: parseFloat((1 / (1/1.70 + 1/3.22)).toFixed(2)),
+    oddsNorB: parseFloat((1 / (1/4.5 + 1/3.22)).toFixed(2)),
+    over05: 1.07, under05: 7.20,
+    over15: 1.38, under15: 2.95,
+    over25: 1.95, under25: 1.82,
+    over35: 2.95, under35: 1.34,
+    over45: 4.80, under45: 1.12,
+    btsYes: 1.78, btsNo: 1.92,
+    ht_over05: 1.58, ht_under05: 2.15,
+    ht_over15: 3.10, ht_under15: 1.32,
+    ht_exact: {
+      "0-0": 2.15, "1-0": 3.20, "0-1": 4.60,
+      "1-1": 6.80, "2-0": 7.50, "0-2": 10.00, autre: 5.20,
+    },
+    exact_score: {
+      "0-0": 7.00, "1-0": 6.00, "0-1": 8.50,
+      "1-1": 5.80, "2-0": 6.00, "0-2": 9.50,
+      "2-1": 5.80, "1-2": 9.00, "2-2": 9.50,
+      "3-0": 9.00, "0-3": 14.00, autre: 13.00,
+    },
+    first_goal: { teamA: 1.68, teamB: 3.20, noGoal: 8.50 },
+    ht_ft: {
+      "1/1": 2.50, "1/N": 12.00, "1/2": 22.00,
+      "N/1": 5.50, "N/N": 6.00, "N/2": 7.00,
+      "2/1": 20.00, "2/N": 14.00, "2/2": 5.50,
+    },
+    cleanSheet: { teamA: 2.60, teamB: 4.50 },
+    handicap: {
+      "teamA -1": 3.00, "teamA -0.5": 1.80, "draw (0)": 4.50,
+      "teamB +0.5": 2.50, "teamB +1": 3.30,
+    },
+  },
 ];
+
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+
+export const isFootball = (match) =>
+  ["football", "Football"].includes(match.sport);
+
+export const isBasket = (match) =>
+  ["basket", "Basketball"].includes(match.sport);
+
+// Retourne true si le match a des paris de score exact
+export const hasExactScore = (match) =>
+  isFootball(match) && Boolean(match.exact_score);
+
+// Retourne true si le match a des paris mi-temps
+export const hasHalfTime = (match) =>
+  Boolean(match.ht_over05) || Boolean(match.ht_over1025);
+
+// Retourne true si le match a un handicap
+export const hasHandicap = (match) =>
+  Boolean(match.handicap);
+
+// Retourne true si le match a "Mi-temps / Fin de match"
+export const hasHtFt = (match) =>
+  Boolean(match.ht_ft);

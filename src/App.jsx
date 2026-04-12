@@ -34,7 +34,6 @@ function Modal({ modal, onClose }) {
       }}>
         <style>{`@keyframes modalIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }`}</style>
 
-        {/* Header */}
         <div style={{ background: "#0d1520", borderBottom: `2px solid ${accentColor}`, padding: "1rem 1.25rem", display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{ width: "34px", height: "34px", background: accentColor, borderRadius: "4px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", flexShrink: 0 }}>
             {isWin ? "🏆" : isLoss ? "💔" : modal.type === "error" ? "⚠️" : "ℹ️"}
@@ -44,13 +43,10 @@ function Modal({ modal, onClose }) {
           </span>
         </div>
 
-        {/* Body */}
         <div style={{ padding: "1.25rem" }}>
           <p style={{ color: "#a0b8c8", fontSize: "14px", margin: "0 0 1rem", lineHeight: 1.6 }}>
             {modal.message}
           </p>
-
-          {/* Résultat win/loss */}
           {(isWin || isLoss) && (
             <div style={{
               padding: "16px", textAlign: "center",
@@ -67,7 +63,6 @@ function Modal({ modal, onClose }) {
           )}
         </div>
 
-        {/* Footer */}
         <div style={{ padding: "0 1.25rem 1.25rem" }}>
           <button onClick={onClose} style={{
             width: "100%", padding: "12px",
@@ -92,6 +87,27 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
   const stake = Number(stakeInput);
   const potentialGain = stake > 0 ? Math.round(stake * totalOdds) : 0;
 
+  // Libellé lisible du type de pari
+  const betTypeLabel = (b) => {
+    const labels = {
+      "1x2": "1X2",
+      dc: "Double Chance",
+      buts: "Over/Under",
+      btts: "BTTS",
+      ht_buts: "Buts MT",
+      ht_exact: "Score exact MT",
+      exact_score: "Score exact",
+      first_goal: "1er buteur",
+      ht_ft: "MT / Fin",
+      cleanSheet: "Clean Sheet",
+      handicap: "Handicap",
+      pts: "Total pts",
+      ht_pts: "Pts MT",
+      raceTo: "Race To",
+    };
+    return labels[b.type] || b.type;
+  };
+
   return (
     <div style={{
       position: "fixed", bottom: "1.5rem", right: "1.5rem",
@@ -100,7 +116,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
       boxShadow: "0 8px 40px rgba(0,200,83,0.15)",
       zIndex: 1000, overflow: "hidden",
     }}>
-      {/* Header */}
       <div style={{
         background: "linear-gradient(90deg, #0d2b1a, #0d2240)",
         borderBottom: "2px solid #00c853",
@@ -118,7 +133,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
         </button>
       </div>
 
-      {/* Liste des paris */}
       <div style={{ maxHeight: "200px", overflowY: "auto", padding: "0.5rem" }}>
         {ticket.map((b) => (
           <div key={b.id} style={{
@@ -128,10 +142,10 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
           }}>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: "12px", color: "#e0e8f0", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                {b.team}
+                {b.matchLabel}
               </div>
               <div style={{ fontSize: "11px", color: "#4a8a6a", marginTop: "2px" }}>
-                {b.matchLabel}
+                {betTypeLabel(b)} — <span style={{ color: "#42a5f5" }}>{b.team}</span>
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px", flexShrink: 0 }}>
@@ -146,7 +160,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
         ))}
       </div>
 
-      {/* Cote totale */}
       <div style={{ padding: "0.5rem 1rem", borderTop: "0.5px solid #1a3a2a", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontSize: "12px", color: "#4a8a6a", letterSpacing: "0.5px", textTransform: "uppercase" }}>Cote totale</span>
         <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "18px", fontWeight: 700, color: "#00c853" }}>
@@ -154,7 +167,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
         </span>
       </div>
 
-      {/* Mise */}
       <div style={{ padding: "0.5rem 1rem", borderTop: "0.5px solid #1a3a2a" }}>
         <div style={{ fontSize: "11px", color: "#4a8a6a", letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "6px" }}>
           Mise (FCFA) — Solde : {balance.toLocaleString()}
@@ -180,7 +192,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
         </div>
       </div>
 
-      {/* Gain potentiel */}
       {potentialGain > 0 && (
         <div style={{ padding: "0.5rem 1rem", borderTop: "0.5px solid #1a3a2a", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(0,200,83,0.05)" }}>
           <span style={{ fontSize: "12px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Gain potentiel</span>
@@ -190,7 +201,6 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
         </div>
       )}
 
-      {/* Bouton confirmer */}
       <div style={{ padding: "0.75rem 1rem" }}>
         <button onClick={onConfirm} style={{
           width: "100%", padding: "12px",
@@ -206,12 +216,217 @@ function BetTicket({ ticket, onRemove, onClear, onConfirm, stakeInput, setStakeI
   );
 }
 
+// ── HISTORIQUE DÉTAILLÉ ──────────────────────────────────────
+function HistoryPage({ betHistory, onClear }) {
+  const [expanded, setExpanded] = useState(null);
+
+  const bets = betHistory;
+  const totalGains = bets.filter(t => t.win).reduce((acc, t) => acc + t.gain, 0);
+  const totalMises = bets.reduce((acc, t) => acc + t.stake, 0);
+  const totalPertes = bets.filter(t => !t.win).reduce((acc, t) => acc + t.stake, 0);
+
+  // Libellé lisible du type de pari (même mapping que BetTicket)
+  const betTypeLabel = (type) => {
+    const labels = {
+      "1x2": "1X2",
+      dc: "Double Chance",
+      buts: "Over/Under",
+      btts: "BTTS",
+      ht_buts: "Buts 1ère MT",
+      ht_exact: "Score exact MT",
+      exact_score: "Score exact",
+      first_goal: "1er buteur",
+      ht_ft: "MT / Fin de match",
+      cleanSheet: "Clean Sheet",
+      handicap: "Handicap",
+      pts: "Total pts",
+      ht_pts: "Pts MT",
+      raceTo: "Race To",
+    };
+    return labels[type] || type;
+  };
+
+  return (
+    <div style={{ maxWidth: "780px", margin: "3rem auto", padding: "0 1rem" }}>
+      <div style={{ background: "#111820", border: "0.5px solid #1a3a2a", borderRadius: "4px", overflow: "hidden" }}>
+
+        {/* Header */}
+        <div style={{ background: "linear-gradient(90deg, #0d2b1a, #0d2240)", borderBottom: "2px solid #00c853", padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+          <div style={{ width: "36px", height: "36px", background: "#00c853", borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>📋</div>
+          <div>
+            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#fff", letterSpacing: "1px", textTransform: "uppercase", margin: 0 }}>
+              Historique des tickets
+            </p>
+            <p style={{ fontSize: "12px", color: "#00c853", margin: "2px 0 0", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+              {bets.length} ticket{bets.length > 1 ? "s" : ""} joué{bets.length > 1 ? "s" : ""}
+            </p>
+          </div>
+          <div style={{ marginLeft: "auto", display: "flex", gap: "20px", flexWrap: "wrap" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "11px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Gagnés</div>
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#00c853" }}>
+                {bets.filter(t => t.win).length}
+              </div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "11px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Perdus</div>
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#ff5555" }}>
+                {bets.filter(t => !t.win).length}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats globales */}
+        {bets.length > 0 && (
+          <div style={{ display: "flex", gap: 0, borderBottom: "0.5px solid #1a3a2a" }}>
+            {[
+              { label: "Total misé", value: `${totalMises.toLocaleString()} FCFA`, color: "#78909c" },
+              { label: "Total gagné", value: `+${totalGains.toLocaleString()} FCFA`, color: "#00c853" },
+              { label: "Total perdu", value: `-${totalPertes.toLocaleString()} FCFA`, color: "#ff5555" },
+            ].map((s, i) => (
+              <div key={i} style={{ flex: 1, padding: "12px 16px", borderRight: i < 2 ? "0.5px solid #1a3a2a" : "none", textAlign: "center" }}>
+                <div style={{ fontSize: "10px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "4px" }}>{s.label}</div>
+                <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "16px", fontWeight: 700, color: s.color }}>{s.value}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Liste tickets */}
+        {bets.length === 0 ? (
+          <div style={{ padding: "3rem", textAlign: "center", color: "#4a8a6a" }}>
+            <div style={{ fontSize: "40px", marginBottom: "12px" }}>🎫</div>
+            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "18px", letterSpacing: "1px" }}>
+              Aucun ticket joué pour l'instant
+            </p>
+          </div>
+        ) : (
+          <div style={{ padding: "1rem 1.5rem", display: "flex", flexDirection: "column", gap: "10px" }}>
+            {bets.map((tx) => (
+              <div key={tx.id} style={{ border: `0.5px solid ${tx.win ? "#1a4a2a" : "#4a1a1a"}`, borderLeft: `3px solid ${tx.win ? "#00c853" : "#ff5555"}`, borderRadius: "4px", overflow: "hidden" }}>
+
+                {/* Ligne principale — cliquable */}
+                <div
+                  onClick={() => setExpanded(expanded === tx.id ? null : tx.id)}
+                  style={{
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    padding: "14px 16px",
+                    background: tx.win ? "rgba(0,200,83,0.06)" : "rgba(255,85,85,0.06)",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <span style={{ fontSize: "20px" }}>{tx.win ? "🏆" : "💔"}</span>
+                    <div>
+                      <div style={{ fontSize: "14px", color: "#e0e8f0", fontWeight: 600 }}>
+                        {tx.label}
+                      </div>
+                      <div style={{ display: "flex", gap: "12px", marginTop: "3px", flexWrap: "wrap" }}>
+                        <span style={{ fontSize: "11px", color: "#4a8a6a" }}>{tx.date}</span>
+                        <span style={{ fontSize: "11px", color: "#78909c" }}>
+                          Mise : <span style={{ color: "#e0e8f0" }}>{tx.stake.toLocaleString()} FCFA</span>
+                        </span>
+                        <span style={{ fontSize: "11px", color: "#78909c" }}>
+                          Cote : <span style={{ color: "#42a5f5" }}>×{tx.totalOdds}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "20px", fontWeight: 700, color: tx.win ? "#00c853" : "#ff5555" }}>
+                        {tx.win ? `+${tx.gain.toLocaleString()}` : `-${tx.stake.toLocaleString()}`} FCFA
+                      </div>
+                      <div style={{ fontSize: "10px", color: tx.win ? "#00c853" : "#ff5555", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                        {tx.win ? "Gagné" : "Perdu"}
+                      </div>
+                    </div>
+                    <span style={{ color: "#4a8a6a", fontSize: "16px", transition: "transform .2s", display: "inline-block", transform: expanded === tx.id ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
+                  </div>
+                </div>
+
+                {/* Détail expandable */}
+                {expanded === tx.id && (
+                  <div style={{ background: "#0a0e14", borderTop: "0.5px solid #1a3a2a", padding: "12px 16px" }}>
+                    <div style={{ fontSize: "10px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px" }}>
+                      Détail des sélections
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {tx.selections.map((sel, i) => (
+                        <div key={i} style={{
+                          display: "flex", justifyContent: "space-between", alignItems: "center",
+                          padding: "10px 12px",
+                          background: "#0d1520", border: "0.5px solid #1a2a40", borderRadius: "4px",
+                        }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: "13px", color: "#cfd8dc", fontWeight: 600, marginBottom: "2px" }}>
+                              {sel.matchLabel}
+                            </div>
+                            <div style={{ fontSize: "11px", color: "#546e7a" }}>
+                              {/* Affiche le type de pari lisible */}
+                              <span style={{ color: "#78909c", marginRight: "4px" }}>[{betTypeLabel(sel.type)}]</span>
+                              →{" "}
+                              <span style={{ color: "#42a5f5", fontWeight: 600 }}>{sel.team}</span>
+                            </div>
+                          </div>
+                          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "16px", fontWeight: 700, color: "#42a5f5", marginLeft: "12px" }}>
+                            ×{sel.odds}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Récap mise / gain */}
+                    <div style={{ marginTop: "10px", padding: "10px 12px", background: tx.win ? "rgba(0,200,83,0.06)" : "rgba(255,85,85,0.06)", border: `0.5px solid ${tx.win ? "#1a4a2a" : "#4a1a1a"}`, borderRadius: "4px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                      <div style={{ display: "flex", gap: "20px" }}>
+                        <div>
+                          <div style={{ fontSize: "10px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Mise</div>
+                          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "16px", color: "#e0e8f0", fontWeight: 700 }}>{tx.stake.toLocaleString()} FCFA</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "10px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Cote totale</div>
+                          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "16px", color: "#42a5f5", fontWeight: 700 }}>×{tx.totalOdds}</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "10px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Gain potentiel</div>
+                          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "16px", color: "#78909c", fontWeight: 700 }}>{tx.potentialGain.toLocaleString()} FCFA</div>
+                        </div>
+                      </div>
+                      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: tx.win ? "#00c853" : "#ff5555" }}>
+                        {tx.win ? `+${tx.gain.toLocaleString()} FCFA` : `-${tx.stake.toLocaleString()} FCFA`}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Footer */}
+        {bets.length > 0 && (
+          <div style={{ padding: "0.75rem 1.5rem", background: "#0d1520", borderTop: "0.5px solid #1a3a2a", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "11px", color: "#2e5a40", letterSpacing: "0.5px" }}>
+              Taux de réussite : {Math.round(bets.filter(t => t.win).length / bets.length * 100)}%
+            </span>
+            <button onClick={onClear} style={{ background: "transparent", border: "none", color: "#ff5555", cursor: "pointer", fontSize: "12px", fontWeight: 700, letterSpacing: "0.5px" }}>
+              EFFACER L'HISTORIQUE
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── APP ──────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState("home");
   const [user, setUser] = useState("Guest");
   const [balance, setBalance] = useState(1000);
   const [transactions, setTransactions] = useState([]);
+  const [betHistory, setBetHistory] = useState([]);
 
   // Wallet
   const [walletModal, setWalletModal] = useState(null);
@@ -237,32 +452,31 @@ export default function App() {
     else setPage(target);
   };
 
-  // Ajouter un pari au ticket (un seul pari par match)
-  const placeBet = (match, team, odds) => {
+  // ── Ajouter un pari au ticket ──────────────────────────────
+  // onBet reçoit maintenant (match, team, odds, type) depuis MatchCard
+  const placeBet = (match, team, odds, type) => {
     setTicket((prev) => {
-      const alreadyExists = prev.find((b) => b.matchId === match.id);
-      if (alreadyExists) {
-        // Remplacer le pari sur ce match
-        return prev.map((b) =>
-          b.matchId === match.id
-            ? { ...b, team, odds, matchLabel: `${match.home} vs ${match.away}` }
-            : b
-        );
-      }
-      return [...prev, {
+      const entry = {
         id: `${match.id}-${Date.now()}`,
         matchId: match.id,
         team,
         odds,
-        matchLabel: `${match.home} vs ${match.away}`,
-      }];
+        type: type || "1x2",
+        matchLabel: `${match.teamA.name} vs ${match.teamB.name}`,
+      };
+      // Un seul pari par match : remplace si déjà présent
+      const alreadyExists = prev.find((b) => b.matchId === match.id);
+      if (alreadyExists) {
+        return prev.map((b) => b.matchId === match.id ? entry : b);
+      }
+      return [...prev, entry];
     });
   };
 
   const removeFromTicket = (id) => setTicket((prev) => prev.filter((b) => b.id !== id));
   const clearTicket = () => { setTicket([]); setStakeInput(""); };
 
-  // Valider le ticket combiné
+  // ── Valider le ticket ──────────────────────────────────────
   const confirmTicket = () => {
     const stake = Number(stakeInput);
     if (!stake || stake <= 0) {
@@ -274,19 +488,41 @@ export default function App() {
       return;
     }
 
-    const totalOdds = ticket.reduce((acc, b) => acc * b.odds, 1);
+    const totalOdds = parseFloat(ticket.reduce((acc, b) => acc * b.odds, 1).toFixed(2));
+    const potentialGain = Math.round(stake * totalOdds);
     const win = Math.random() > 0.45;
-    const gain = win ? Math.round(stake * totalOdds) : 0;
+    const gain = win ? potentialGain : 0;
 
-    setBalance((b) => b - stake);
-    if (win) setBalance((b) => b + gain);
+    setBalance((b) => b - stake + (win ? gain : 0));
 
+    const ticketLabel = ticket.length === 1
+      ? `${ticket[0].matchLabel}`
+      : `Combiné ${ticket.length} matchs`;
+
+    // Historique détaillé — on sauvegarde le type de pari pour chaque sélection
+    const historyEntry = {
+      id: Date.now(),
+      label: ticketLabel,
+      date: new Date().toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }),
+      stake,
+      totalOdds,
+      potentialGain,
+      gain,
+      win,
+      selections: ticket.map((b) => ({
+        matchLabel: b.matchLabel,
+        team: b.team,
+        odds: b.odds,
+        type: b.type,       // ← type de pari (1x2, exact_score, ht_ft, etc.)
+      })),
+    };
+    setBetHistory((prev) => [historyEntry, ...prev]);
+
+    // Transactions wallet
     setTransactions((prev) => [{
       id: Date.now(),
       type: "bet",
-      label: ticket.length === 1
-        ? `${ticket[0].matchLabel} — ${ticket[0].team}`
-        : `Combiné ${ticket.length} matchs`,
+      label: ticketLabel,
       amount: win ? `+${gain}` : `-${stake}`,
       win,
       date: new Date().toLocaleTimeString(),
@@ -314,7 +550,7 @@ export default function App() {
     );
   };
 
-  // Wallet
+  // ── Wallet ─────────────────────────────────────────────────
   const handleWallet = (type) => {
     const amount = Number(walletAmount);
     if (!amount || amount <= 0) { setWalletMsg({ type: "error", text: "Montant invalide" }); return; }
@@ -349,10 +585,8 @@ export default function App() {
   return (
     <div style={{ minHeight: "100vh", background: "#0a0e14", color: "#e0e8f0", fontFamily: "'Barlow', sans-serif" }}>
 
-      {/* Modales */}
       <Modal modal={modal} onClose={() => setModal(null)} />
 
-      {/* Ticket flottant */}
       <BetTicket
         ticket={ticket}
         onRemove={removeFromTicket}
@@ -479,98 +713,12 @@ export default function App() {
       )}
 
       {/* ── HISTORY ── */}
-{page === "history" && (
-  <div style={{ maxWidth: "700px", margin: "3rem auto", padding: "0 1rem" }}>
-    <div style={{ background: "#111820", border: "0.5px solid #1a3a2a", borderRadius: "4px", overflow: "hidden" }}>
-
-      {/* Header */}
-      <div style={{ background: "linear-gradient(90deg, #0d2b1a, #0d2240)", borderBottom: "2px solid #00c853", padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", gap: "12px" }}>
-        <div style={{ width: "36px", height: "36px", background: "#00c853", borderRadius: "2px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>📋</div>
-        <div>
-          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#fff", letterSpacing: "1px", textTransform: "uppercase", margin: 0 }}>
-            Historique des tickets
-          </p>
-          <p style={{ fontSize: "12px", color: "#00c853", margin: "2px 0 0", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-            {transactions.filter(t => t.type === "bet").length} paris joués
-          </p>
-        </div>
-        <div style={{ marginLeft: "auto", display: "flex", gap: "20px" }}>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "11px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Gagnés</div>
-            <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#00c853" }}>
-              {transactions.filter(t => t.type === "bet" && t.win).length}
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "11px", color: "#4a8a6a", textTransform: "uppercase", letterSpacing: "0.5px" }}>Perdus</div>
-            <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "22px", fontWeight: 700, color: "#ff5555" }}>
-              {transactions.filter(t => t.type === "bet" && !t.win).length}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Contenu vide */}
-      {transactions.filter(t => t.type === "bet").length === 0 ? (
-        <div style={{ padding: "3rem", textAlign: "center", color: "#4a8a6a" }}>
-          <div style={{ fontSize: "40px", marginBottom: "12px" }}>🎫</div>
-          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: "18px", letterSpacing: "1px" }}>
-            Aucun ticket joué pour l'instant
-          </p>
-        </div>
-      ) : (
-        <div style={{ padding: "1rem 1.5rem", display: "flex", flexDirection: "column", gap: "10px" }}>
-          {transactions
-            .filter(t => t.type === "bet")
-            .map((tx) => (
-              <div key={tx.id} style={{
-                display: "flex", justifyContent: "space-between", alignItems: "center",
-                padding: "14px 16px",
-                background: tx.win ? "rgba(0,200,83,0.06)" : "rgba(255,85,85,0.06)",
-                border: `0.5px solid ${tx.win ? "#1a4a2a" : "#4a1a1a"}`,
-                borderLeft: `3px solid ${tx.win ? "#00c853" : "#ff5555"}`,
-                borderRadius: "4px",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <span style={{ fontSize: "20px" }}>{tx.win ? "🏆" : "💔"}</span>
-                  <div>
-                    <div style={{ fontSize: "14px", color: "#e0e8f0", fontWeight: 600 }}>{tx.label}</div>
-                    <div style={{ fontSize: "11px", color: "#4a8a6a", marginTop: "3px" }}>{tx.date}</div>
-                  </div>
-                </div>
-                <div style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "20px", fontWeight: 700,
-                  color: tx.win ? "#00c853" : "#ff5555",
-                }}>
-                  {tx.amount} FCFA
-                </div>
-              </div>
-            ))}
-        </div>
+      {page === "history" && (
+        <HistoryPage
+          betHistory={betHistory}
+          onClear={() => setBetHistory([])}
+        />
       )}
-
-      {/* Footer */}
-      {transactions.filter(t => t.type === "bet").length > 0 && (
-        <div style={{ padding: "0.75rem 1.5rem", background: "#0d1520", borderTop: "0.5px solid #1a3a2a", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: "11px", color: "#2e5a40", letterSpacing: "0.5px" }}>
-            Taux de réussite : {Math.round(transactions.filter(t => t.type === "bet" && t.win).length / transactions.filter(t => t.type === "bet").length * 100)}%
-          </span>
-          <button
-            onClick={() => setTransactions(prev => prev.filter(t => t.type !== "bet"))}
-            style={{ background: "transparent", border: "none", color: "#ff5555", cursor: "pointer", fontSize: "12px", fontWeight: 700, letterSpacing: "0.5px" }}>
-            EFFACER L'HISTORIQUE
-          </button>
-        </div>
-      )}
-    </div>
-  </div>
-)}
-
-
-
-
-
 
       {/* ── CONTACT ── */}
       {page === "contact" && <Contact />}
