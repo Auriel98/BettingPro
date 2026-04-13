@@ -269,11 +269,6 @@ export default function Hero({ onStart, onNav }) {
           <span className="blue">Gagne.</span>
         </h1>
 
-        <p className="hero-sub">
-          La plateforme de simulation de paris sportifs.<br />
-          <strong>Sans risque, avec les vraies cotes.</strong>
-        </p>
-
         <div className="hero-actions">
           <button className="btn-primary" onClick={onStart}>
             Commencer à parier
